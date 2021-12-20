@@ -1,0 +1,27 @@
+{
+  "name": "solicord",
+  "version": "1.0.0",
+  "description": "SoliCord.JS is new, light and simple Node.js module for interaction with Discord API. ",
+  "main": "src/Main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SolindekDev/solicord.js.git"
+  },
+  "keywords": [
+    "Discord",
+    "NodeJS"
+  ],
+  "author": "SolindekDev and jedrek0429",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SolindekDev/solicord.js/issues"
+  },
+  "homepage": "https://github.com/SolindekDev/solicord.js#readme",
+  "dependencies": {
+    "node-fetch": "^2.3.0",
+    "ws": "^8.3.0"
+  }
+}
