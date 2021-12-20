@@ -1,6 +1,8 @@
 'use strict'
 
 const ws = require('../WebSocket')
+const member = require('../Member')
+const guilds = require("../Guild")
 
 module.exports = class Client {
     /**
@@ -19,10 +21,10 @@ module.exports = class Client {
 
         socket.socket.onmessage = (event) => {
             if (socket.log == true) {
-                console.log(`[WebSocket] Message: ${event.data}`)
-                socket.SocketMessageCheck(event.data)
+                // console.log(`[WebSocket] Message: ${event.data}`)
+                this.checkEvent(event.data);
             } else {
-                console.log(`${event.data}`)
+                this.checkEvent(event.data);
             }
         }
 
@@ -44,12 +46,40 @@ module.exports = class Client {
     }
 
     event(nameEvent, functionEvent) {
-        if (nameEvent != String) throw new Error("Name event must be a string type")
-        if (functionEvent != Function) throw new Error("Function event must be a function type")
+        if (typeof nameEvent != 'string') throw new Error("Name event must be a string type")
+        if (typeof functionEvent != 'function') throw new Error("Function event must be a function type")
 
         switch (nameEvent.toLowerCase()) {
             case "ready":
                 this.events.readyEvent = functionEvent
+        }
+    }
+
+    checkEvent(data) {
+        const par = JSON.parse(data)
+        
+        switch(par.t) {
+            case null:
+                return;
+            case 'READY':
+                if (this.events.readyEvent == null || this.events.readyEvent == undefined) {
+                    return;
+                } else {
+                    if (typeof this.events.readyEvent != 'function') throw new Error("Event must be a function")
+
+                    const guildsToSend = [];
+
+                    par.d.guilds.forEach(guild => {
+                        guildsToSend.push({ id: guild.id })
+                    })
+
+                    const objectToSend = {
+                        user: new member(par),
+                        guilds: guildsToSend
+                    }
+
+                    this.events.readyEvent(objectToSend)
+                }
         }
     }
 }

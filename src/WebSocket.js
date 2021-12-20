@@ -59,35 +59,6 @@ module.exports = class WebSocket {
                 }`)
             }
         }
-
-        // this.socket.onmessage = (event) => {
-        //     if (this.log == true) {
-        //         console.log(`[WebSocket] Message: ${event.data}`)
-        //         this.SocketMessageCheck(event.data)
-        //     } else {
-        //         console.log(`${event.data}`)
-        //     }
-        // }
-
-        // this.socket.onclose = (event) => {
-        //     if (event.wasClean) {
-        //         if (this.log == true) {
-        //             console.log(`[WebSocket] Connection closed. Code: ${event.code}, Reason: ${event.reason}`)
-        //             this.SocketErrorCheck(event.code, event.reason)
-        //         } else {
-        //             this.SocketErrorCheck(event.code, event.reason)
-        //         }
-        //     } else {
-        //         // Server process killed or network is down
-        //         if (this.log == true) {
-        //             console.log(`[WebSocket] Connection died`);
-        //         }
-        //     }
-        // }
-    }
-
-    SocketMessageCheck(message) {
-
     }
 
     SocketErrorCheck(code, reason) {
@@ -95,9 +66,13 @@ module.exports = class WebSocket {
             case 4004: 
                 // This code tell us that Authorization Failed
                 throw new Error("Invalid Token Bot!")
+            case 4012:
+                throw new Error("Invalid API version!")
+            case 4000:
+                throw new Error("Invalid Error")
             default:
                 // New errors will be added soon...
-                throw new Error(`Unexpected error: code ${code} (${reason})`)
+                throw new Error(`Unexpected error: code ${code} ${reason}`)
         }
     }
 }
