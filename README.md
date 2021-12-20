@@ -7,5 +7,5 @@ SoliCord.JS is new, light and simple [Node.js](https://nodejs.org) module for in
 Installation is not avaible yet. You can just download this code though.
 
 ## Contributors
-	- [jedrek0429](https://github.com/jedrek0429)
-	- [SolindekDev](https://github.com/SolindekDev)
+- [jedrek0429](https://github.com/jedrek0429)
+- [SolindekDev](https://github.com/SolindekDev)
