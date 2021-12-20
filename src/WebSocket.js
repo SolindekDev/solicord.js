@@ -13,8 +13,9 @@ module.exports = class WebSocket {
      * Constructor of WebSocket class
      * 
      * @param {String} token Token of bot (Is required!)
-     * @param {*} encoding Deafult "json"
-     * @param {*} gatewayVersion Defualt value is "9" and it's the best!
+     * @param {String} encoding Deafult "json"
+     * @param {Integer} gatewayVersion Defualt value is "9" and it's the best!
+     * @param {Boolean} Log 
      */
     constructor(token, encoding, gatewayVersion, log) {
         if (!token) throw new Error("Token to WebSocket is required!");
@@ -59,30 +60,30 @@ module.exports = class WebSocket {
             }
         }
 
-        this.socket.onmessage = (event) => {
-            if (this.log == true) {
-                console.log(`[WebSocket] Message: ${event.data}`)
-                this.SocketMessageCheck(event.data)
-            } else {
-                console.log(`${event.data}`)
-            }
-        }
+        // this.socket.onmessage = (event) => {
+        //     if (this.log == true) {
+        //         console.log(`[WebSocket] Message: ${event.data}`)
+        //         this.SocketMessageCheck(event.data)
+        //     } else {
+        //         console.log(`${event.data}`)
+        //     }
+        // }
 
-        this.socket.onclose = (event) => {
-            if (event.wasClean) {
-                if (this.log == true) {
-                    console.log(`[WebSocket] Connection closed. Code: ${event.code}, Reason: ${event.reason}`)
-                    this.SocketErrorCheck(event.code, event.reason)
-                } else {
-                    this.SocketErrorCheck(event.code, event.reason)
-                }
-            } else {
-                // Server process killed or network is down
-                if (this.log == true) {
-                    console.log(`[WebSocket] Connection died`);
-                }
-            }
-        }
+        // this.socket.onclose = (event) => {
+        //     if (event.wasClean) {
+        //         if (this.log == true) {
+        //             console.log(`[WebSocket] Connection closed. Code: ${event.code}, Reason: ${event.reason}`)
+        //             this.SocketErrorCheck(event.code, event.reason)
+        //         } else {
+        //             this.SocketErrorCheck(event.code, event.reason)
+        //         }
+        //     } else {
+        //         // Server process killed or network is down
+        //         if (this.log == true) {
+        //             console.log(`[WebSocket] Connection died`);
+        //         }
+        //     }
+        // }
     }
 
     SocketMessageCheck(message) {

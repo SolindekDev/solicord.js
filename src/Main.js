@@ -15,5 +15,4 @@
 module.exports = { 
     WebSocket: require('./WebSocket'),
     Client: require('./Client/Client'),
-    ClientOptions: require('./Client/ClientOptions')
 }
