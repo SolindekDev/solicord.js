@@ -13,5 +13,7 @@
 'use strict';
 
 module.exports = { 
-    WebSocket: require('./WebSocket')
+    WebSocket: require('./WebSocket'),
+    Client: require('./Client/Client'),
+    ClientOptions: require('./Client/ClientOptions')
 }

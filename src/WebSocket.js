@@ -4,6 +4,8 @@
 *    Documentation article thats helped: https://discord.com/developers/docs/topics/gateway
 */
 
+'use strict'
+
 const ws = require('ws');
 
 module.exports = class WebSocket {
@@ -59,11 +61,26 @@ module.exports = class WebSocket {
 
         this.socket.onmessage = (event) => {
             if (this.log == true) {
-            
                 console.log(`[WebSocket] Message: ${event.data}`)
-                SocketMessageCheck(event.data)
+                this.SocketMessageCheck(event.data)
             } else {
                 console.log(`${event.data}`)
+            }
+        }
+
+        this.socket.onclose = (event) => {
+            if (event.wasClean) {
+                if (this.log == true) {
+                    console.log(`[WebSocket] Connection closed. Code: ${event.code}, Reason: ${event.reason}`)
+                    this.SocketErrorCheck(event.code, event.reason)
+                } else {
+                    this.SocketErrorCheck(event.code, event.reason)
+                }
+            } else {
+                // Server process killed or network is down
+                if (this.log == true) {
+                    console.log(`[WebSocket] Connection died`);
+                }
             }
         }
     }
@@ -72,5 +89,14 @@ module.exports = class WebSocket {
 
     }
 
-
+    SocketErrorCheck(code, reason) {
+        switch (code) {
+            case 4004: 
+                // This code tell us that Authorization Failed
+                throw new Error("Invalid Token Bot!")
+            default:
+                // New errors will be added soon...
+                throw new Error(`Unexpected error: code ${code} (${reason})`)
+        }
+    }
 }
